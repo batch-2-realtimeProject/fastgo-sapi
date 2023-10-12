@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<flow name="get-routes-impl-flowFlow" doc:id="b50ff812-50f1-4302-8e15-ba4332f1dc94" >
+		<logger level="INFO" doc:name="start logger" doc:id="08ae28a8-d157-4e5d-8c88-d9dfcba8c5d1" message='#["request received for routes under txn#:" ++ vars.transactionId]'/>
+		<flow-ref doc:name="get-routes-impl-flowSub_Flow" doc:id="9fba0567-f782-47f9-b52e-57ec3920c7d0" name="get-routes-impl-flowSub_Flow"/>
+		<logger level="INFO" doc:name="end logger" doc:id="018dc2f2-772c-4d3e-a160-4bbd6e5a746e" message='#["Request completed for txnId: " ++ vars.transactionId]'/>
+	</flow>
+	<sub-flow name="get-routes-impl-flowSub_Flow" doc:id="c0c43717-70df-41ea-8d92-10f029a092f8" >
+		<salesforce:query doc:name="Query" doc:id="bb68b6c6-8f77-4bd0-826f-6f2e656226df" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[select companyCode__c, destinationLocationCode__c, transportType__c, destinationLocationDesc__c, originLocationCode__c, originLocationDesc__c from getRoutes__c where transportType__c = ':transportType' and companyCode__c = ':transportCompany']]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	transportType : vars.transportType as String,
+	transportCompany : vars.transportCompany as String
+}]]]></salesforce:parameters>
+		</salesforce:query>
+	</sub-flow>
+</mule>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="common-flowsSub_Flow" doc:id="c3440603-2187-4f25-8290-581efd968e8b" >
+		<ee:transform doc:name="transaction Id" doc:id="a312f1cb-43a0-4c33-ae95-59e101d8f38b" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="transactionId" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.Headers.transactionId default uuid()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="initialize variables" doc:id="3b2047c8-2864-4e94-9388-837548524e06" >
+			<ee:variables >
+				<ee:set-variable variableName="transportType" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.uriParams.'transportType']]></ee:set-variable>
+				<ee:set-variable variableName="transportCompany" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.uriParams.'transportCompany']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+</mule>

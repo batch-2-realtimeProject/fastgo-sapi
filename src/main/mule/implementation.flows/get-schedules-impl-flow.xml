@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<flow name="get-schedules-impl-flowFlow" doc:id="27510cc2-4250-481f-8ebf-2f0505b7e5ea" >
+		<logger level="INFO" doc:name="start logger" doc:id="3beaad7a-a2ec-4a12-bbd9-a9296914e8b9" message='#["request received for routes under txn#:" ++ vars.transactionId]'/>
+		<flow-ref doc:name="get-routes-impl-flowSub_Flow" doc:id="53dfd385-40da-427b-998c-237017a58de1" name="get-schedules-impl-flowSub_Flow" />
+		<logger level="INFO" doc:name="end logger" doc:id="272b782f-d2db-4be7-b277-2c9f2337ae41" message='#["request completed for routes under txn#:" ++ vars.transactionId]' />
+	</flow>
+	<sub-flow name="get-schedules-impl-flowSub_Flow" doc:id="1e770efe-a79c-40df-8b3d-8abf9d2a2108" >
+		<salesforce:query doc:name="Query" doc:id="f0fa4d69-b6f2-4813-b0b0-95927be3c8ba" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[select originLocationDesc__c, originLocationCode__c, destinationLocationDesc__c, destinationLocationCode__c, departureDateTime__c, companyName__c, availableSeats__c from getScedules__c where transportType__c = ':transportType' and companyName__c = ':transportCompany' ]]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	transportType : vars.transportType,
+	transportCompany : vars.transportCompany
+}]]]></salesforce:parameters>
+		</salesforce:query>
+	</sub-flow>
+</mule>

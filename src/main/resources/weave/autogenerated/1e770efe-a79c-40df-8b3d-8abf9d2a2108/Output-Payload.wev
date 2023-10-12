@@ -1,0 +1,15 @@
+%dw 2.0
+
+type auto_1e770efe_a79c_40df_8b3d_8abf9d2a2108_Output_Payload = Array<getRoutes__c>
+type getRoutes__c = {|
+  companyCode__c?: String {"typeId": "companyCode__c"}, 
+  destinationLocationCode__c?: String {"typeId": "destinationLocationCode__c"}, 
+  destinationLocationDesc__c?: String {"typeId": "destinationLocationDesc__c"}, 
+  originLocationCode__c?: String {"typeId": "originLocationCode__c"}, 
+  originLocationDesc__c?: String {"typeId": "originLocationDesc__c"}, 
+  transportType__c?: String {"typeId": "transportType__c"}
+|} {"label": "getRoutes",
+"typeId": "getRoutes__c"}
+
+
+
