@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	</salesforce:sfdc-config>
 	<configuration-properties doc:name="Configuration properties" doc:id="1dee62f1-f6e4-4d70-944c-0a9b947611bd" file="properties/${mule.env}.yaml" />
 	<global-property doc:name="Global Property" doc:id="afd3f328-ede8-47a1-b53d-458c62d35c8f" name="mule.env" value="dev" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="376afeea-fa97-407b-997a-984622a6992e" file="properties/${mule.env}-secure.yaml" key="transport!!!@" >
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="376afeea-fa97-407b-997a-984622a6992e" file="properties/${mule.env}-secure.yaml" key="${mule.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	
